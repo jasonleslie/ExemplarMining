@@ -54,12 +54,27 @@ namespace Exemplar_Mining.Controllers
         */
         [HttpGet]
         [Route("overseers")]
-        public async Task<ActionResult<IEnumerable<ReportDTO>>> GetMineOverseers()
+        public async Task<ActionResult<IEnumerable<ReportOverseerDTO>>> GetMineOverseers()
         {
-            return await _context.Employee.Where(x => x.Mines.Count > 0).Select(x => new ReportDTO
+            return await _context.Employee.Where(x => x.Mines.Count > 0).Select(x => new ReportOverseerDTO
             {
                 Name = x.FirstName + " " + x.LastName,
                 Position = x.Position,
+                MineCount = x.Mines.Count
+            }).ToListAsync();
+        }
+
+        /*
+        *   Returns a list of Mine types (type of resource e.g. gold) with the count of mines of said type.
+        */
+        [HttpGet]
+        [Route("resources")]
+        public async Task<ActionResult<IEnumerable<ReportResourceDTO>>> GetMineTypes()
+        {
+            return await _context.Resource.Where(x => x.Mines.Count > 0).Select(x => new ReportResourceDTO
+            {
+                Type = x.Type,
+                Value = x.Value,
                 MineCount = x.Mines.Count
             }).ToListAsync();
         }
