@@ -1,2 +1,0 @@
-USER exemplar_admin
-PASS eXamplePass
